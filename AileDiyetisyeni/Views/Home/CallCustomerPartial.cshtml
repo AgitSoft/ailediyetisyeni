@@ -1,0 +1,137 @@
+﻿<section id="newsletter" class="newsletter text-center">
+    <div class="container">       
+        <div class="row">
+            <div class="main_newsletter sections">
+                <div class="col-sm-12">
+                    <div class="single_newsletter_head">
+                        <h2>DİYET AİLEMİZE HEMEN KATILABİLİRSİNİZ :)</h2>
+                        <p>
+                            Ailediyetisyeni.com ailesi olarak sizi aramızda görmek bizi mutlu edecektir.Bilgilerinizi yazın, sizi arayalım.
+                        </p>
+                    </div>
+                    <div class="single_sewsletter_content">
+                        <div class="row">
+                            <div class="col-sm-8 col-sm-offset-2">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Ad" id="txtName" min="2" max="100">  <br />
+                                    <p id="validateIsim"></p>
+                                    <input type="text" class="form-control" placeholder="Soy Ad" id="txtLastName" min="2" required=""> <br />
+                                    <p id="validateSoyIsim"></p>
+                                    <input type="email" class="form-control" placeholder="Mail Adresi" id="txtMail"> <br />
+                                    <p id="validateEmail"></p>
+                                    <input type="number" class="form-control" placeholder="Telefon Numarası" id="txtPhone" max="12" required=""> <br />
+                                    <p id="demo"></p>
+                                    <input type="button" value="BAŞVUR" class="btn btn-primary" id="btnsubmit" />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@*<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/toastr.js"></script>*@
+
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+
+
+
+<script type="text/javascript">
+
+
+
+    function sayiMi() {
+        var txt = "";
+        var inputPhone = document.getElementById("txtPhone");
+        if (inputPhone.value.length != 11) {
+            txt = "Telefon numarası 11 karakterli olmalıdır :)";
+            document.getElementById("demo").innerHTML = txt;
+            return false;
+
+        }
+        document.getElementById("demo").innerHTML = txt;
+        return true;
+    }
+
+    function textMi() {
+        var txt = "";
+        var inputName = document.getElementById("txtName");
+        var inputLastName = document.getElementById("txtLastName");
+        if (inputName.value.length < 2) {
+            txt = "Girdiğiniz değer çok küçük :(";
+            document.getElementById("validateIsim").innerHTML = txt;
+            document.getElementById("validateSoyIsim").innerHTML = txt;
+            return false;
+        }
+        if (inputLastName.value.length < 2) {
+            txt = "Girdiğiniz değer çok küçük :(";
+            document.getElementById("validateIsim").innerHTML = txt;
+            document.getElementById("validateSoyIsim").innerHTML = txt;
+            return false;
+        }
+        document.getElementById("validateIsim").innerHTML = txt;
+        document.getElementById("validateSoyIsim").innerHTML = txt;
+        return true;
+    }
+
+    function validateEmail() {
+        var txt = "";
+        var email = document.getElementById("txtMail");
+        if (/^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value)) {
+            document.getElementById("validateEmail").innerHTML = txt;
+
+        }
+        else {
+            txt = "Mail formatını kontrol edebilir misiniz :)";
+            document.getElementById("validateEmail").innerHTML = txt;
+            return false;
+        }
+
+        document.getElementById("validateEmail").innerHTML = txt;
+        return true;
+    }
+
+
+    var isSent = false;
+    $(document).ready(function () {
+        $("#btnsubmit").click(function () {
+            if (isSent)
+                return;
+            isSent = true;
+            var customers = new Object();
+
+            customers.Name = $("#txtName").val();
+            customers.Surname = $("#txtLastName").val();
+            customers.MailAdress = $("#txtMail").val();
+            customers.Phone = $("#txtPhone").val();
+
+            if (sayiMi() && textMi() && validateEmail()) {
+
+                $.ajax({
+                    async: true,
+                    processData: false,
+                    cache: false,
+                    type: "POST",
+                    url: "/Home/CallCustomerPartial",
+                    data: JSON.stringify(customers),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+
+                });
+                toastr.success("Sağlıklı bir hayat için başarılı kayıt gerçekleştirdiniz :)", "Başarılı");
+            }
+            else {
+                alert("Tüm alanları düzgün bir şekilde doldurabilir misiniz :)");
+            }
+        });
+    });
+
+</script>
+
+
