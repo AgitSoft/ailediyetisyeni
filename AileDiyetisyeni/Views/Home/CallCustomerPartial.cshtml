@@ -1,5 +1,5 @@
 ﻿<section id="newsletter" class="newsletter text-center">
-    <div class="container">       
+    <div class="container">
         <div class="row">
             <div class="main_newsletter sections">
                 <div class="col-sm-12">
@@ -34,7 +34,7 @@
 </section>
 
 @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script src="~/Scripts/toastr.js"></script>*@
+    <script src="~/Scripts/toastr.js"></script>*@
 
 <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
@@ -96,7 +96,13 @@
         document.getElementById("validateEmail").innerHTML = txt;
         return true;
     }
-
+    function emptyAreas() {
+        debugger;
+        document.getElementById("txtName").value = '';
+        document.getElementById("txtLastName").value = '';
+        document.getElementById("txtMail").value = '';
+        document.getElementById("txtPhone").value = '';
+    }
 
     var isSent = false;
     $(document).ready(function () {
@@ -125,6 +131,8 @@
 
                 });
                 toastr.success("Sağlıklı bir hayat için başarılı kayıt gerçekleştirdiniz :)", "Başarılı");
+                debugger;
+                emptyAreas();
             }
             else {
                 alert("Tüm alanları düzgün bir şekilde doldurabilir misiniz :)");
